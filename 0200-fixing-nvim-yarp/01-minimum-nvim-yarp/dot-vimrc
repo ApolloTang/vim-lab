@@ -1,0 +1,43 @@
+
+    set nocompatible
+    set hidden          " Handle multiple buffers better.
+    set laststatus=2    " Show the status line all the time
+
+    let DIR = getcwd()
+    echom DIR
+
+    if !filereadable(DIR.'/dot-vim/plug.vim')
+      echom 'executing curl...'
+      silent !curl --insecure -fLo ./dot-vim/plug.vim
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    endif
+
+    call plug#begin(DIR.'/dot-vim/plugged')
+      Plug 'https://github.com/roxma/nvim-yarp'
+      Plug 'https://github.com/roxma/vim-hug-neovim-rpc'
+    call plug#end()
+
+    " Python Setting {
+      " set pythondll=/usr/local/Frameworks/Python.framework/Versions/3.7/Python
+      " set pythonhome=/usr/local/Frameworks/Python.framework/Versions/3.7
+      set pythonthreedll=/usr/local/Frameworks/Python.framework/Versions/3.7/Python
+      set pythonthreehome=/usr/local/Frameworks/Python.framework/Versions/3.7
+    " }
+
+    set pyxversion=3
+    set encoding=utf-8
+    echom neovim_rpc#serveraddr()
+    echom exepath('python3')
+
+    let $NVIM_PYTHON_LOG_FILE=DIR."/nvim_log"
+    let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
+
+
+    " Create a python3 process running the hello module. The process is lazy load.
+    let s:hello = yarp#py3('hello')
+
+    com HelloSync call s:hello.request('greet')
+    com HelloAsync call s:hello.notify('greet')
+
+    " You could type :Hello greet
+    com -nargs=1 Hello call s:hello.request(<f-args>)
