@@ -4,7 +4,7 @@
     set laststatus=2    " Show the status line all the time
 
     let DIR = getcwd()
-    echom DIR
+    echom 'getcwd(): '.DIR
 
     if !filereadable(DIR.'/dot-vim/plug.vim')
       echom 'executing curl...'
@@ -26,12 +26,15 @@
 
     set pyxversion=3
     set encoding=utf-8
-    echom neovim_rpc#serveraddr()
-    echom exepath('python3')
+
+    echom 'neovim_rpc#serveraddr(): '.neovim_rpc#serveraddr()
+    echom "exepth('python3'): ".exepath('python3')
 
     let $NVIM_PYTHON_LOG_FILE=DIR."/nvim_log"
     let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
 
+
+    echom '$NVIM_PYTHON_LOG_FILE: '.$NVIM_PYTHON_LOG_FILE
 
     " Create a python3 process running the hello module. The process is lazy load.
     let s:hello = yarp#py3('hello')
@@ -41,3 +44,5 @@
 
     " You could type :Hello greet
     com -nargs=1 Hello call s:hello.request(<f-args>)
+
+
