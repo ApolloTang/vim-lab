@@ -1,7 +1,9 @@
-type Foo = Number 
-type Bar = String 
+type Foo = Number
+type Bar = String
 const foo:Foo = 'foo'
 const bar:Bar = 1
+
+
 
 
 

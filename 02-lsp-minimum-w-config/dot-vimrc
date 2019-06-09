@@ -17,10 +17,10 @@
       Plug 'prabirshrestha/async.vim'
       Plug 'prabirshrestha/vim-lsp'
 
-      "/ typescript syntax
+      "/ Typescript syntax
       Plug 'https://github.com/leafgarland/typescript-vim'
 
-      "/ install theme
+      "/ Theme
       Plug 'https://github.com/morhetz/gruvbox'
       Plug 'https://github.com/ApolloTang/apollotang-light'
     call plug#end()

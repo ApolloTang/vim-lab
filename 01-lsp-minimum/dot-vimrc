@@ -17,7 +17,7 @@
       Plug 'prabirshrestha/async.vim'
       Plug 'prabirshrestha/vim-lsp'
 
-      "/ typescript syntax
+      "/ Typescript syntax
       Plug 'https://github.com/leafgarland/typescript-vim'
 
     call plug#end()

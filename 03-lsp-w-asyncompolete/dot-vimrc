@@ -21,10 +21,10 @@
       Plug 'prabirshrestha/asyncomplete.vim'
       Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
-      "/ typescript syntax
+      "/ Typescript syntax
       Plug 'https://github.com/leafgarland/typescript-vim'
 
-      "/ install theme
+      "/ Theme
       Plug 'https://github.com/morhetz/gruvbox'
       Plug 'https://github.com/ApolloTang/apollotang-light'
     call plug#end()
@@ -116,6 +116,9 @@
         \ <SID>check_back_space() ? "\<TAB>" :
         \ asyncomplete#force_refresh()
       inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+      set  completeopt+=preview  "/ set completeopt+=preview
+      autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif "/ auto close preview window when completion is done
     "/ }
 
 
