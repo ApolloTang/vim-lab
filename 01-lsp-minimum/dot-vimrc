@@ -1,0 +1,45 @@
+
+    set nocompatible
+    set hidden          " Handle multiple buffers better.
+    set laststatus=2    " Show the status line all the time
+
+    let DIR = getcwd()
+    echom DIR
+
+    if !filereadable(DIR.'/dot-vim/plug.vim')
+      echom 'executing curl...'
+      silent !curl --insecure -fLo ./dot-vim/plug.vim
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    endif
+
+    call plug#begin(DIR.'/dot-vim/plugged')
+      "/ vim-lsp
+      Plug 'prabirshrestha/async.vim'
+      Plug 'prabirshrestha/vim-lsp'
+
+      "/ typescript syntax
+      Plug 'https://github.com/leafgarland/typescript-vim'
+
+    call plug#end()
+
+
+    "/ vim-lsp {
+      let g:lsp_log_verbose = 1
+      let g:lsp_log_file = 'vim-lsp.log'
+
+      if executable('typescript-language-server')
+        echom 'typescript-language-server is executable'
+        au User lsp_setup call lsp#register_server({
+          \ 'name': 'typescript support using typescript-language-server',
+          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+          \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+          \ 'whitelist': ['typescript', 'typescript.tsx'],
+          \ })
+      else
+        echohl ErrorMsg
+        echom 'Sorry, `typescript-language-server` is not installed. See :h vim-lsp-typescript for more details on setup.'
+        echohl NONE
+      endif
+    "/ }
+
+
