@@ -26,6 +26,13 @@
     call plug#end()
 
 
+    "/ **   Important
+    "/ **   =========
+    "/ **   colorscheme and syntax hightlight
+    "/ **   enabling must come before
+    "/ **   vim-lsp highlighting configuration
+    "/ **
+
     syntax enable     " Turn on syntax highlighting.
     if has("gui_running")
       if has("gui_macvim")

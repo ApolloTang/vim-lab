@@ -139,6 +139,57 @@
         Plug 'https://github.com/moll/vim-bbye'
     call plug#end()
 
+"/ **   Important
+"/ **   =========
+"/ **   colorscheme and syntax hightlight
+"/ **   enabling must come before
+"/ **   vim-lsp highlighting configuration
+"/ **
+
+syntax enable  "/ Turn on syntax highlighting.
+
+"/ **
+"/ ** Enabling colorscheme
+"/ **
+"/ Colors and fonts {
+
+  " let g:solarized_termcolors=256
+  " set t_Co=256
+  " set background=dark
+  " colorscheme grb256
+  " colorscheme koehler
+  " colorscheme apollotang
+  " colorscheme apollotang-light
+  " set transparency=15
+
+  if has("gui_running")
+    if has("gui_gtk2")
+      " colorscheme slate
+      " colorscheme apollotang
+      colorscheme apollotang-light
+      set guifont=Inconsolata\ 9
+    elseif has("gui_macvim")
+      " echo 'is macvim'
+      colorscheme apollotang-light
+      set guifont=Inconsolata:h14
+      " set guifont=Menlo\ Regular:h14
+      " set guifont=Andale\ Mono:h14
+      " set guifont=Courier\ New\ Regular:h11
+      " set guifont=PT\ Mono:h11
+      " set guifont=Osaka-Mono:h14
+      " set guifont=Monaco:h12
+      " set guifont=Source\ Code\ Pro\ Light:h12
+      " set guifont=Source\ Code\ Pro\ ExtraLight:h12
+      " colorscheme apollotang
+      " set guifont=Consolas:h12
+    elseif has("gui_win32")
+      set guifont=Consolas:h9:cANSI
+    endif
+  endif
+
+" }
+
+
 "/ **
 "/ ** vim-lsp configuration
 "/ **
@@ -371,7 +422,6 @@
     inoremap ,, <Esc>l
     vnoremap ,, <Esc>
 
-    syntax enable                           " Turn on syntax highlighting.
     filetype plugin indent on               " Turn on file type detection.
 
     runtime macros/matchit.vim              " Load the matchit plugin.
@@ -497,41 +547,7 @@
 
 " }
 
-" Colors and fonts {
-    " let g:solarized_termcolors=256
-    " set t_Co=256
-    " set background=dark
-    " colorscheme grb256
-    " colorscheme koehler
-    " colorscheme apollotang
-    " colorscheme apollotang-light
-    " set transparency=15
 
-    if has("gui_running")
-      if has("gui_gtk2")
-        " colorscheme slate
-        " colorscheme apollotang
-        colorscheme apollotang-light
-        set guifont=Inconsolata\ 9
-      elseif has("gui_macvim")
-        " echo 'is macvim'
-        colorscheme apollotang-light
-        set guifont=Inconsolata:h14
-        " set guifont=Menlo\ Regular:h14
-        " set guifont=Andale\ Mono:h14
-        " set guifont=Courier\ New\ Regular:h11
-        " set guifont=PT\ Mono:h11
-        " set guifont=Osaka-Mono:h14
-        " set guifont=Monaco:h12
-        " set guifont=Source\ Code\ Pro\ Light:h12
-        " set guifont=Source\ Code\ Pro\ ExtraLight:h12
-        " colorscheme apollotang
-        " set guifont=Consolas:h12
-      elseif has("gui_win32")
-        set guifont=Consolas:h9:cANSI
-      endif
-    endif
-" }
 
 " Syntax highlight { ------------------------------------------------------
     map <F6> :echo synIDattr(synIDtrans(synID(line("."), col("."), 1)), "name")
