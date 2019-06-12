@@ -69,7 +69,6 @@
         Plug 'mtscout6/syntastic-local-eslint.vim'
 
         Plug 'https://github.com/juvenn/mustache.vim'
-        Plug 'https://github.com/Shougo/denite.nvim'
 
         Plug 'https://github.com/keith/swift.vim'
         Plug 'https://github.com/TheCodedSelf/syntastic-swift'
@@ -105,6 +104,15 @@
 
         Plug 'https://github.com/Shougo/vimproc.vim', {'do' : 'make'}
         Plug 'https://github.com/Shougo/vimshell.vim'
+
+        "/ ***
+        "/ *** Shougo/denite.nvim
+        "/ ***
+        "/ Next two plugin are dependency of Shougo/denite.nvim
+            Plug 'https://github.com/roxma/nvim-yarp'
+            Plug 'https://github.com/roxma/vim-hug-neovim-rpc'
+
+            Plug 'https://github.com/Shougo/denite.nvim'
 
         Plug 'https://github.com/posva/vim-vue'
 
@@ -258,12 +266,29 @@
       let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
     "/ }
 
-    "/ Shougo/denite.vim {
-      function! Fuz()
-        Denite file_rec
-      endfunction
-      command! Cfuz call Fuz() <bar> :echo "Fuz() => :Denite file_rec"
+
+    "/ **
+    "/ ** Shougo/denite.nvim configuration
+    "/ **
+    "/ Shougo/denite.nvim {
+      "/ Define mappings
+        autocmd FileType denite call s:denite_my_settings()
+        function! s:denite_my_settings() abort
+          nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+          nnoremap <silent><buffer><expr> d denite#do_map('do_action', 'delete')
+          nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
+          nnoremap <silent><buffer><expr> q denite#do_map('quit')
+          nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
+          nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
+        endfunction
+
+      "/ Command to invoke Denite
+        function! Fuz()
+          Denite file/rec
+        endfunction
+        command! Cfuz call Fuz() <bar> :echo "Fuz() => :Denite file/rec"
     "/ }
+
 
     "/ Konfekt/FastFold {
       let g:fastfold_savehook = 0 " update folds manually
