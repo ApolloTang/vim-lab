@@ -1,0 +1,175 @@
+
+    set nocompatible
+    set hidden          " Handle multiple buffers better.
+    set laststatus=2    " Show the status line all the time
+
+    let DIR = getcwd()
+    echom DIR
+
+    if !filereadable(DIR.'/dot-vim/plug.vim')
+      echom 'executing curl...'
+      silent !curl --insecure -fLo ./dot-vim/plug.vim
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    endif
+
+    call plug#begin(DIR.'/dot-vim/plugged')
+      "/ vim-lsp
+      Plug 'prabirshrestha/async.vim'
+      Plug 'prabirshrestha/vim-lsp'
+
+      "/ asyncomplete
+      Plug 'prabirshrestha/asyncomplete.vim'
+      Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+      "/ Typescript syntax
+      Plug 'https://github.com/leafgarland/typescript-vim'
+
+      "/ Flow syntax
+      Plug 'https://github.com/flowtype/vim-flow'
+
+      "/ Jsx syntax
+      Plug 'neoclide/vim-jsx-improve'
+
+      "/ Theme
+      Plug 'https://github.com/morhetz/gruvbox'
+      Plug 'https://github.com/ApolloTang/apollotang-light'
+    call plug#end()
+
+
+    "/ **   Important
+    "/ **   =========
+    "/ **   colorscheme and syntax hightlight
+    "/ **   enabling must come before
+    "/ **   vim-lsp highlighting configuration
+    "/ **
+
+    syntax enable     " Turn on syntax highlighting.
+
+    if has("gui_running")
+      if has("gui_macvim")
+        echom 'is macvim'
+        " colorscheme gruvbox
+        colorscheme apollotang-light
+        set guifont=Inconsolata:h14
+      endif
+    endif
+
+
+    "/ vim-lsp {
+      let g:lsp_log_verbose = 1
+      let g:lsp_log_file = 'vim-lsp.log'
+
+
+      "/ Typescript
+      "/ ------------
+        if executable('typescript-language-server')
+          echom 'typescript-language-server is executable'
+          au User lsp_setup call lsp#register_server({
+            \ 'name': 'typescript support using typescript-language-server',
+            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+            \ 'whitelist': ['typescript', 'typescript.tsx'],
+            \ })
+        else
+          echohl ErrorMsg
+          echom 'Sorry, `typescript-language-server` is not installed. See :h vim-lsp-typescript for more details on setup.'
+          echohl NONE
+        endif
+
+
+      "/ Flow
+      "/ ------------
+        if executable('flow')
+          echom 'flow is executable'
+          au User lsp_setup call lsp#register_server({
+            \ 'name': 'flow',
+            \ 'cmd': {server_info->['flow', 'lsp']},
+            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
+            \ 'whitelist': ['javascript', 'javascript.jsx'],
+            \ })
+        endif
+
+        if executable('flow-language-server')
+          echom 'flow-language-server is executable'
+          au User lsp_setup call lsp#register_server({
+            \ 'name': 'flow-language-server',
+            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'flow-language-server --stdio']},
+            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
+            \ 'whitelist': ['javascript', 'javascript.jsx'],
+            \ })
+        endif
+
+
+      "/ Javascript
+      "/ ------------
+        if executable('typescript-language-server')
+          echom 'typescript-language-server is executable'
+          au User lsp_setup call lsp#register_server({
+            \ 'name': 'javascript support using typescript-language-server',
+            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
+            \ 'whitelist': ['javascript', 'javascript.jsx'],
+            \ })
+        else
+          echohl ErrorMsg
+          echom 'Sorry, `typescript-language-server` is not installed. See `:help vim-lsp-javascript` for more details on setup.'
+          echohl NONE
+        endif
+
+
+      "/ Diagnostics
+      "/ ------------
+        let g:lsp_diagnostics_enabled = 1     "/ enable diagnostics
+        let g:lsp_diagnostics_echo_cursor = 1 "/ enable echo under cursor when in normal mode
+
+
+      "/ Sign
+      "/ ------------
+        let g:lsp_signs_enabled = 1                 "/ Enable signs
+        let g:lsp_signs_error = {'text': '✗'}
+        let g:lsp_signs_warning = {'text': '‼'}
+        let g:lsp_signs_hint = {'text': '*'}
+
+
+      "/ Virtual text
+      "/ ------------
+        let g:lsp_virtual_text_enabled = 0          "/ NeoVim only so disable
+
+
+      "/ Highlight
+      "/ ---------
+        let g:lsp_highlights_enabled = 1          "/ Enable highlight
+        let g:lsp_textprop_enabled = 1            "/ Enabling textprop (underline)
+
+        "/ To change the style of the highlighting, you can set or link:
+          highlight LspErrorHighlight       cterm=underline gui=undercurl guisp=red    ctermfg=red
+          highlight LspWarningHighlight     cterm=underline gui=undercurl guisp=orange ctermfg=3
+          highlight LspInformationHighlight cterm=underline gui=undercurl guisp=cyan1  ctermfg=cyan
+          highlight LspHintHighlight        cterm=underline gui=undercurl guisp=green  ctermfg=green
+    "/ }
+
+
+    "/ asyncomplete {
+      inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+      inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+      inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+      imap <c-space> <Plug>(asyncomplete_force_refresh)
+
+      let g:asyncomplete_auto_popup = 0
+
+      function! s:check_back_space() abort
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1]  =~ '\s'
+      endfunction
+
+      inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ asyncomplete#force_refresh()
+      inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+      set  completeopt+=preview  "/ set completeopt+=preview
+      autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif "/ auto close preview window when completion is done
+    "/ }
+
+
