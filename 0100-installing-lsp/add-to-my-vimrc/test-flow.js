@@ -12,7 +12,7 @@ const restaurants = [
   {name: 'Taco Place', address: '550 Maple Rd'}
 ]
 
-type Props = {};
+type PropsXXX = {};
 export default class App extends Component<Props> {
   render() {
     return (

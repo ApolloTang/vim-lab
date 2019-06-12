@@ -147,7 +147,7 @@
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = 'vim-lsp.log'
 
-  "/ typescript
+  "/ Typescript
   "/ ------------
   if executable('typescript-language-server')
     echom 'typescript-language-server is executable'
@@ -163,7 +163,7 @@
     echohl NONE
   endif
 
-  "/ flow
+  "/ Flow
   "/ ------------
   if executable('flow')
     echom 'flow is executable'
@@ -207,21 +207,17 @@
   "/ Highlight
   "/ ---------
     let g:lsp_highlights_enabled = 1          "/ Enable highlight
-    let g:lsp_textprop_enabled = 0            "/ NOTE: Enabling textprop will break Sign
+    let g:lsp_textprop_enabled = 1            "/ Enabling textprop (underline)
 
 
-
-    "/ To change the style of the highlighting, you can set or link:
-    "/ LspErrorHighlight`, `LspWarningHighlight`, `LspInformationHighlight` and LspHintHighlight` highlight groups
-
-    "/ *****
-    "/ ***** THESE SETTING HAS NO EFFECT
-    "/ ***** Expecting to highlight where error occurs but seem to be broken
-    "/ *****
-
-      highlight LspErrorHighlight term=underline cterm=underline gui=underline
-      "highlight LspErrorHighlight ctermfg=red guifg=red ctermbg=green guibg=green
+  "/ To change the style of the highlighting, you can set or link:
+    highlight LspErrorHighlight       cterm=underline gui=undercurl guisp=red    ctermfg=red
+    highlight LspWarningHighlight     cterm=underline gui=undercurl guisp=orange ctermfg=3
+    highlight LspInformationHighlight cterm=underline gui=undercurl guisp=cyan1  ctermfg=cyan
+    highlight LspHintHighlight        cterm=underline gui=undercurl guisp=green  ctermfg=green
 "/ }
+"/ ** vim-lsp configuration END
+
 
 "/ **
 "/ ** asyncomplete configuration
