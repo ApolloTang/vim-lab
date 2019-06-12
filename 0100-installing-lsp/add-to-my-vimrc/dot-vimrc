@@ -1372,9 +1372,5 @@ nmap <C-Down> ]e`[            " Bubling down one line
 
 "/ }}}
 
-""""/ Not sure what is next two line, I don't remember adding them
-"" vim:fdm=expr:fdl=0
-"" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='
-
 " END .vimrc
 
