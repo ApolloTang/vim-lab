@@ -200,6 +200,11 @@ syntax enable  "/ Turn on syntax highlighting.
 
   "/ Typescript
   "/ ------------
+  "/ ::: configuring vim-lsp for typescript
+  "/   from:
+  "/     https://github.com/ryanolsonx/vim-lsp-typescript/blob/master/plugin/lsp-typescript.vim
+  "/   also see:
+  "/     https://github.com/prabirshrestha/vim-lsp/wiki/Servers-TypeScript
   if executable('typescript-language-server')
     echom 'typescript-language-server is executable'
     au User lsp_setup call lsp#register_server({
@@ -225,7 +230,6 @@ syntax enable  "/ Turn on syntax highlighting.
       \ 'whitelist': ['javascript', 'javascript.jsx'],
       \ })
   endif
-
 
 
   "/ Diagnostics
