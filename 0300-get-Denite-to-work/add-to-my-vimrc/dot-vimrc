@@ -32,27 +32,6 @@
         Plug 'brooth/far.vim'
             "/ Find and replace text through multiple files.
 
-        " Plug 'mxw/vim-jsx'
-            "/ mxw/vim-jsx required pangloss/vim-javascript or yajs.vim
-            "/ mxw/vim-jsx (2019 Jan) is broken and is not actively maintain
-
-        " Plug 'pangloss/vim-javascript'
-
-        " Plug 'https://github.com/othree/yajs.vim'
-            "/ yajs is a replacement of pangloss/vim-javascript' but is out of
-            "/ maintained
-
-        " Plug 'https://github.com/othree/es.next.syntax.vim'
-            "/ es.next.syntax.vim is needed for yajs.vim'
-
-        " Plug 'https://github.com/MaxMEllon/vim-jsx-pretty'
-            "/ use with yajs.vim, need to exec the follow:
-            "/ $ mkdir -p ~/.vim/after/indent # if you use `nvim`, then ~/.config/nvim/after/indent
-            "/ $ wget https://github.com/pangloss/vim-javascript/blob/master/indent/javascript.vim -O ~/.vim/after/indent/javascript.vim
-            "/ Apollo Note: I executed as instructed above but results in error, so I removed ~/.vim/after/indent
-
-        Plug 'neoclide/vim-jsx-improve'
-            "/ this is the replacement for mxw/vim-jsx
 
 
         Plug 'https://github.com/cakebaker/scss-syntax.vim'
@@ -110,7 +89,7 @@
         "/ ***
         Plug 'https://github.com/roxma/nvim-yarp'          "/required for denite.nvim
         Plug 'https://github.com/roxma/vim-hug-neovim-rpc' "/required for denite.nvim
-	Plug 'https://github.com/Shougo/denite.nvim'
+        Plug 'https://github.com/Shougo/denite.nvim'
 
         Plug 'https://github.com/posva/vim-vue'
 
@@ -125,10 +104,34 @@
         "/ Flow syntax
         Plug 'https://github.com/flowtype/vim-flow'
 
+        "/ ***
+        "/ *** Jsx syntax
+        "/ ***
+            " Plug 'mxw/vim-jsx'
+                "/ mxw/vim-jsx required pangloss/vim-javascript or yajs.vim
+                "/ mxw/vim-jsx (2019 Jan) is broken and is not actively maintain
+
+            " Plug 'https://github.com/othree/yajs.vim'
+                "/ yajs is a replacement of pangloss/vim-javascript' but is out of
+                "/ maintained
+
+            " Plug 'https://github.com/othree/es.next.syntax.vim'
+                "/ es.next.syntax.vim is needed for yajs.vim'
+
+            " Plug 'https://github.com/MaxMEllon/vim-jsx-pretty'
+                "/ use with yajs.vim, need to exec the follow:
+                "/ $ mkdir -p ~/.vim/after/indent # if you use `nvim`, then ~/.config/nvim/after/indent
+                "/ $ wget https://github.com/pangloss/vim-javascript/blob/master/indent/javascript.vim -O ~/.vim/after/indent/javascript.vim
+                "/ Apollo Note: I executed as instructed above but results in error, so I removed ~/.vim/after/indent
+
+        "/ neoclide/vim-jsx-imporve is the replacement for mxw/vim-jsx
+        Plug 'neoclide/vim-jsx-improve'
+
+
         "/ Theme
+        Plug 'https://github.com/morhetz/gruvbox'
         Plug 'https://github.com/ApolloTang/apollotang-light'
         Plug 'https://github.com/ApolloTang/vim-color-apollotang'
-        Plug 'https://github.com/morhetz/gruvbox'
 
         Plug 'https://github.com/editorconfig/editorconfig-vim'
 
@@ -186,10 +189,11 @@ syntax enable  "/ Turn on syntax highlighting.
   endif
 
 " }
-    "/ ** vim-lsp configuration
-    "/ **
-    "/ vim-lsp {
-      "/ Comment out next two lines for debugging
+"/ **
+"/ ** vim-lsp configuration
+"/ **
+"/ vim-lsp {
+  "/ Comment out next two lines for debugging
       " let g:lsp_log_verbose = 1
       " let g:lsp_log_file = 'vim-lsp.log'
 
@@ -213,16 +217,33 @@ syntax enable  "/ Turn on syntax highlighting.
         echohl NONE
       endif
 
-      "/ flow
-      "/ ------------
-      if executable('flow')
-        au User lsp_setup call lsp#register_server({
-          \ 'name': 'flow',
-          \ 'cmd': {server_info->['flow', 'lsp']},
-          \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
-          \ 'whitelist': ['javascript', 'javascript.jsx'],
-          \ })
-      endif
+  "/ Flow
+  "/ ------------
+  if executable('flow')
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'flow',
+      \ 'cmd': {server_info->['flow', 'lsp']},
+      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
+      \ 'whitelist': ['javascript', 'javascript.jsx'],
+      \ })
+        endif
+
+
+  "/ Javascript
+  "/ ------------
+    if executable('typescript-language-server')
+      echom 'typescript-language-server is executable for ft of javascript and javascript.jsx'
+      au User lsp_setup call lsp#register_server({
+        \ 'name': 'javascript support using typescript-language-server',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'jsconfig.json'))},
+        \ 'whitelist': ['javascript', 'javascript.jsx'],
+        \ })
+    else
+      echohl ErrorMsg
+      echom 'Sorry, `typescript-language-server` is not installed. See `:help vim-lsp-javascript` for more details on setup.'
+      echohl NONE
+  endif
 
 
     "/ Diagnostics
