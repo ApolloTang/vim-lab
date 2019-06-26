@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "es6"
+    "allowJs": false,  /* do everything that the TypeScript compiler does except type check your code */
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
