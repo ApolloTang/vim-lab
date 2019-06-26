@@ -150,7 +150,7 @@
 syntax enable  "/ Turn on syntax highlighting.
 
 "/ **
-"/ ** Enabling colorscheme
+"/ ** Enabling colorscheme start
 "/ **
 "/ Colors and fonts {
 
@@ -187,8 +187,7 @@ syntax enable  "/ Turn on syntax highlighting.
       set guifont=Consolas:h9:cANSI
     endif
   endif
-
-" }
+"/} Enabling colorscheme end
 
 
 "/ **
@@ -307,6 +306,20 @@ syntax enable  "/ Turn on syntax highlighting.
   set  completeopt+=preview  "/ set completeopt+=preview
   autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif "/ auto close preview window when completion is done
 "/ }
+
+
+"/ **
+"/ ** vim-flow configuration start
+"/ **
+"/  {
+
+  "/ This is to fix this bug: https://github.com/flowtype/vim-flow/issues/38#issuecomment-266044794
+    let g:flow#autoclose = 1
+    "/ If g:flow#autoclose is set to 1, the quickfix window will not be opened
+    "/ when there are no errors, and will be automatically closed when previous errors are cleared.
+
+"/ } vim-flow configuration end
+
 
 
     "/ junegunn/vim-easy-align {

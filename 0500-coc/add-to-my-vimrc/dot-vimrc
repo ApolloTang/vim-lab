@@ -143,7 +143,7 @@
 syntax enable  "/ Turn on syntax highlighting.
 
 "/ **
-"/ ** Enabling colorscheme
+"/ ** Enabling colorscheme start
 "/ **
 "/ Colors and fonts {
 
@@ -180,8 +180,7 @@ syntax enable  "/ Turn on syntax highlighting.
       set guifont=Consolas:h9:cANSI
     endif
   endif
-
-" }
+"/} Enabling colorscheme end
 
 
 "/ **
@@ -321,8 +320,7 @@ syntax enable  "/ Turn on syntax highlighting.
     "/ If g:flow#autoclose is set to 1, the quickfix window will not be opened
     "/ when there are no errors, and will be automatically closed when previous errors are cleared.
 
-"/ } vim-flow configuration start
-
+"/ } vim-flow configuration end
 
 
 
