@@ -1,0 +1,49 @@
+
+    set nocompatible
+    set hidden          " Handle multiple buffers better.
+    set laststatus=2    " Show the status line all the time
+
+    let DIR = getcwd()
+    echom DIR
+
+    if !filereadable(DIR.'/dot-vim/plug.vim')
+      echom 'executing curl...'
+      silent !curl --insecure -fLo ./dot-vim/plug.vim
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    endif
+
+    call plug#begin(DIR.'/dot-vim/plugged')
+      "/ ale
+      Plug 'w0rp/ale'
+
+      "/ Theme
+      Plug 'https://github.com/morhetz/gruvbox'
+      Plug 'https://github.com/ApolloTang/apollotang-light'
+    call plug#end()
+
+    syntax enable     " Turn on syntax highlighting.
+
+    if has("gui_running")
+      if has("gui_macvim")
+        echom 'is macvim'
+        " colorscheme gruvbox
+        colorscheme apollotang-light
+        set guifont=Inconsolata:h14
+      endif
+    endif
+
+    "/ Enable ESLint only for JavaScript.
+    " let g:ale_linters = {
+    " \  'javascript': ['eslint']
+    " \ }
+
+    " Only run linters named in ale_linters settings.
+    " let g:ale_linters_explicit = 1
+
+    "/ navigate between errors
+    nmap <silent> <C-j> <Plug>(ale_previous_wrap)
+    nmap <silent> <C-k> <Plug>(ale_next_wrap)
+
+    "/ When this option is set to `1`, ALE ignores all linters powered by LSP, and also `tsserver`.
+    let g:ale_disable_lsp = 1
+
