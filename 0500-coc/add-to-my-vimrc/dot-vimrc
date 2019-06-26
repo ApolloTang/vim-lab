@@ -1427,10 +1427,6 @@ nmap <C-Down> ]e`[            " Bubling down one line
 " }
 
 
-" pangloss/vim-javascript plugin { ----------------------------------------
-  let g:javascript_plugin_jsdoc = 1  " Enables syntax highlighting for JSDocs.
-  let g:javascript_plugin_flow = 1   " Enables syntax highlighting for Flow.
-" }
 
 "/ wildignore {{{ ---------------------------------------------------------
 
