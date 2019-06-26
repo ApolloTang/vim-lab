@@ -5,7 +5,7 @@
 "/ {
   set nocompatible
   set hidden          "/ Handle multiple buffers better.
-                      "/ [coc] if hidden is not set, TextEdit might fail.
+                      "/ [COC] if hidden is not set, TextEdit might fail.
 "}
 
     "/ The following are use for debugging in a sandbox
@@ -188,14 +188,6 @@ syntax enable  "/ Turn on syntax highlighting.
 "/ ** COC configuration start
 "/ **
 "/  {
-
-  "/ Some servers have issues with backup files,
-  "/ see https://github.com/neoclide/coc.nvim/issues/649
-    set nobackup
-    set nowritebackup
-
-  "/ Better display for messages
-  set cmdheight=2
   "/ You will have bad experience for diagnostic messages when it's default 4000.
   set updatetime=300
   "/ don't give |ins-completion-menu| messages.
@@ -297,8 +289,6 @@ syntax enable  "/ Turn on syntax highlighting.
         \ },
         \ }
 
-
-
   " Using CocList
   " Show all diagnostics
   nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
@@ -326,9 +316,10 @@ syntax enable  "/ Turn on syntax highlighting.
 "/ **
 "/  {
 
-  "/ If g:flow#autoclose is set to 1, the quickfix window will not be opened
-  "/ when there are no errors, and will be automatically closed when previous errors are cleared.
+  "/ This is to fix this bug: https://github.com/flowtype/vim-flow/issues/38#issuecomment-266044794
     let g:flow#autoclose = 1
+    "/ If g:flow#autoclose is set to 1, the quickfix window will not be opened
+    "/ when there are no errors, and will be automatically closed when previous errors are cleared.
 
 "/ } vim-flow configuration start
 
@@ -490,8 +481,14 @@ syntax enable  "/ Turn on syntax highlighting.
     set title                               " Set the terminal's title
 
     set autoread                            " auto read when a file is changed from outside
-    set nobackup                            " Don't make a backup before overwriting a file.
-    set nowritebackup                       " And again.
+
+    "/ [COC] Some servers have issues with backup files
+    "/       and required to set nobackup and nowritebackup
+    "/       see https://github.com/neoclide/coc.nvim/issues/649
+    "/ note: I have set both nobackup and nowritebackup before COC
+      set nobackup
+      set nowritebackup
+
     set noswapfile                          " no swap files
     "set directory=$HOME/.vim/tmp//,.       " Keep swap files in one location
 
