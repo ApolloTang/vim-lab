@@ -1,0 +1,28 @@
+{
+  // -------------
+  // Basic setting
+  // -------------
+  // "tsserver.trace.server": "verbose",
+
+  // Diagnostic symbol:
+  "diagnostic.errorSign": ">",
+  "diagnostic.infoSign": "i",
+  "diagnostic.hintSign": "h",
+
+  // Preview window height:
+  "list.maxPreviewHeight": 50,
+
+  // [Note] flow configuration should be enable per project basis:
+  // "tsserver.enableJavascript": false,
+  // "languageserver": {
+  //   "flow": {
+  //     "command": "flow",
+  //     "args": ["lsp"],
+  //     "filetypes": ["javascript", "javascriptreact"],
+  //     "initializationOptions": {},
+  //     "requireRootPattern": true,
+  //     "settings": {},
+  //     "rootPatterns": [".flowconfig"]
+  //   }
+  // },
+}
