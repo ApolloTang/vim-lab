@@ -46,6 +46,14 @@
     endif
 
 
+  let g:coc_config_home = './dot-vim'
+  "# The above tells Coc where to locate './vim' folder.
+  "# The '.vim' folder is where Coc look for
+  "# the file 'coc-settings.json'
+  "# This is added in PR:
+  "# https://github.com/neoclide/coc.nvim/pull/1103
+
+
   "/ Some servers have issues with backup files,
   "/ see https://github.com/neoclide/coc.nvim/issues/649
     set nobackup
@@ -175,11 +183,4 @@
   nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 
-let g:coc_config_home = './dot-vim'
-"# The above tells Coc where to locate './vim' folder.
-"# The '.vim' folder is where Coc look for
-"# the file 'coc-settings.json'
-"# This is added in PR:
-"# https://github.com/neoclide/coc.nvim/pull/1103
-"
-"
+
