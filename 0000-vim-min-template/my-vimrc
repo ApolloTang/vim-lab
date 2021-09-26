@@ -1,0 +1,30 @@
+
+set nocompatible
+set hidden          "/ Handle multiple buffers better. if hidden is not set, TextEdit might fail.
+set laststatus=2    "/ Show the status line all the time
+set nobackup
+set nowritebackup
+set noswapfile
+
+
+let DIR = getcwd()
+echom DIR
+
+"\ Use vim-plug as plugin system
+if !filereadable(DIR.'/dot-vim/plug.vim')
+  echom 'executing curl...'
+  silent !curl --insecure -fLo ./dot-vim/plug.vim
+endif
+
+call plug#begin(DIR.'/dot-vim/plugged')
+  Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
+call plug#end()
+
+"colorscheme tempus_day
+
+
+
+
+
+
+"/---eof---
