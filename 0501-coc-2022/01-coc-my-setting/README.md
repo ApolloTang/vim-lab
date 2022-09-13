@@ -23,10 +23,12 @@ Each projects folder is configured to different language in `./dot-vimrc/coc-set
 
 Todo:
 
-  Add ability to configure custom location instaed of use `~/.config/coc/`
+Done:
 
-see: 
+  ~~Add ability to configure custom location instaed of use `~/.config/coc/`~~
 
-[https://github.com/neoclide/coc.nvim/issues/1528](https://github.com/neoclide/coc.nvim/issues/1528)
+~~see:~~ 
 
-[https://github.com/neoclide/coc.nvim/pull/1529](https://github.com/neoclide/coc.nvim/pull/1529)
+~~[https://github.com/neoclide/coc.nvim/issues/1528](https://github.com/neoclide/coc.nvim/issues/1528)~~
+
+~~[https://github.com/neoclide/coc.nvim/pull/1529~~](https://github.com/neoclide/coc.nvim/pull/1529)
