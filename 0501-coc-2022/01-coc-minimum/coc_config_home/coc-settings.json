@@ -1,0 +1,12 @@
+{
+  // -------------
+  // Basic setting
+  // -------------
+  // "tsserver.trace.server": "verbose",
+
+  // Diagnostic symbol:
+  "diagnostic.errorSign": ">",
+  "diagnostic.infoSign": "i",
+  "diagnostic.hintSign": "h"
+}
+  
