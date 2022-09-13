@@ -1,4 +1,5 @@
 dot-vim
+coc_data_home
 node_modules
 *.log
 *.swp

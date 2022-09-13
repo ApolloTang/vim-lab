@@ -45,8 +45,11 @@
     endif
 
 
+  "/ Use configuration file in sandbox.
   let g:coc_config_home = DIR.'/coc_config_home'
   echom g:coc_config_home
+  let g:coc_data_home = DIR.'/coc_data_home'
+  echom g:coc_data_home
 
 
   "/ Some servers have issues with backup files,
