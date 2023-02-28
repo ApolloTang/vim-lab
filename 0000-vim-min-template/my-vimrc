@@ -17,10 +17,26 @@ if !filereadable(DIR.'/dot-vim/plug.vim')
 endif
 
 call plug#begin(DIR.'/dot-vim/plugged')
-  Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
+  Plug 'ApolloTang/theme-vim--snow'
 call plug#end()
 
-"colorscheme tempus_day
+if has("gui_running")
+  if has("gui_gtk2")
+    echo 'plateform: gui_gtk2'
+    set background=light
+    colorscheme snow
+    set guifont=Inconsolata\ 9
+  elseif has("gui_macvim")
+    echo 'plateform: gui_macvim'
+    set background=light
+    colorscheme snow
+    set guifont=Inconsolata:h14
+    hi Pmenu ctermbg=gray guibg=#dfe7fb
+  elseif has("gui_win32")
+    echo 'plateform: gui_win32'
+    set guifont=Consolas:h9:cANSI
+  endif
+endif
 
 
 
