@@ -6,35 +6,40 @@ set nobackup
 set nowritebackup
 set noswapfile
 
+let CURRENT_SCRIPT=expand("<sfile>") "/ https://stackoverflow.com/a/4977006/3136861
+echom 'Curent script is: '
+echom CURRENT_SCRIPT
 
 let DIR = getcwd()
+echom 'Curent directory is: '
 echom DIR
 
 "\ Use vim-plug as plugin system
-if !filereadable(DIR.'/dot-vim/plug.vim')
+if !filereadable(DIR.'/dot-vim/autoload/plug.vim')
   echom 'executing curl...'
-  silent !curl --insecure -fLo ./dot-vim/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl --insecure -fLo './dot-vim/autoload/plug.vim' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | :execute "source " . expand(CURRENT_SCRIPT)
 endif
-
-call plug#begin(DIR.'/dot-vim/plugged')
+  
+call plug#begin(DIR.'/dot-vim/autoload/plugged')
   Plug 'ApolloTang/theme-vim--snow'
   Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 call plug#end()
 
 if has("gui_running")
   if has("gui_gtk2")
-    echo 'plateform: gui_gtk2'
+    echom 'plateform: gui_gtk2'
     set background=light
     colorscheme snow
     set guifont=Inconsolata\ 9
   elseif has("gui_macvim")
-    echo 'plateform: gui_macvim'
+    echom 'plateform: gui_macvim'
     set background=light
     colorscheme snow
     set guifont=Inconsolata:h14
     hi Pmenu ctermbg=gray guibg=#dfe7fb
   elseif has("gui_win32")
-    echo 'plateform: gui_win32'
+    echom 'plateform: gui_win32'
     set guifont=Consolas:h9:cANSI
   endif
 endif
